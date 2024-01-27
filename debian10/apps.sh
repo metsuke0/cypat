@@ -14,10 +14,6 @@ CURRENT_USERS=$(grep -E "[0-9]{4,5}:[0-9]{4,5}" /etc/passwd | grep -v nobody)
 
 # Delete unauthorized users
 
-echo "###"
-echo "Deleting unauthorized users"
-echo "###"
-
 for LINE in ${CURRENT_USERS}; do
   USER=$(echo ${LINE} | sed 's/:.*//')
   if [[ ${ALL_USERS[@]} =~ ${USER} ]]; then
@@ -35,10 +31,6 @@ done
 
 # Set passwords on admins
 
-echo "###"
-echo "Creating passwords for admins"
-echo "###"
-
 for i in "${!AUTH_ADMINS[@]}"; do
   if echo ${AUTH_ADMINS[i]} | grep --quiet 'dartmonkey'; then
     continue
@@ -48,19 +40,5 @@ done
 
 # Set admin group
 
-echo "###"
-echo "Setting up admin group"
-echo "###"
-
-sed -i "s/sudo:.*/sudo:x:27:$(echo ${AUTH_ADMINS[@]} | sed 's/ /,/g')/" /etc/group
-
-# Add new users
-
-echo "###"
-echo "Adding new users"
-echo "###"
-
-for USER in $(cat new-users.txt); do
-  /usr/sbin/useradd -m ${USER}
-done
+sudo:x:27:ninjamonkey,gluegunner,dartlinggunner,dartmonkey
 
