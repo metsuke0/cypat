@@ -6,5 +6,5 @@ echo "###"
 echo "Home directory files"
 echo "###"
 
-find /home -type f | grep -v '/\.' | grep -v 'cypat'
+find /home | grep -v '/\.' | grep -v 'cypat'
 
